@@ -1,6 +1,8 @@
 package com.polynomialcalculator.alexm.polynomialcalculator;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -15,19 +17,37 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    ArrayList<Polynomial> list;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setupViews();
+        setup();
     }
 
-    private void setupViews() {
+    private void setup() {
+
+
+        if (Hawk.contains("polynomialList")) {
+            list = Hawk.get("polynomialList");
+        } else {
+            list = new ArrayList<>();
+        }
+
+
         FloatingActionButton floatingActionButton = findViewById(R.id.act_main_fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Floating action button works", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, list.get(0).valueIn(-1, 3).toString(), Toast.LENGTH_LONG).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent myIntent = new Intent(MainActivity.this, CreatePolynomialActivity.class);
+                        MainActivity.this.startActivity(myIntent);
+                    }
+                }, 100);
             }
         });
 
@@ -36,19 +56,16 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        ArrayList<Polynomial> list;
-        if (Hawk.contains("polynomialList")) {
-            list = Hawk.get("polynomialList");
-        } else {
-            list = new ArrayList<>();
-        }
-
         PolynomialAdapter mAdapter = new PolynomialAdapter(list);
 
         mAdapter.setOnItemClickListener(new PolynomialAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(int position, Polynomial polynomial) {
-                Toast.makeText(MainActivity.this, position + "", Toast.LENGTH_SHORT).show();
+
+//                Toast.makeText(MainActivity.this, list.get(0).valueIn(position, 1).toString(), Toast.LENGTH_LONG).show();
+                Intent myIntent = new Intent(MainActivity.this, PolynomialActivity.class);
+                myIntent.putExtra("polynomialInstance", polynomial);
+                MainActivity.this.startActivity(myIntent);
             }
         });
 

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp">
+
+        <TextView
+                android:id="@+id/polynomial_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="24sp"
+                android:textColor="@color/colorAccent"
+                tools:text="2xy teakjhsajkfhjkadsf"/>
+
+        <Button
+                android:id="@+id/btn_add"
+                android:layout_width="100dp"
+                android:layout_marginTop="16dp"
+                android:layout_height="100dp"
+                android:text="add"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/polynomial_tv"/>
+
+        <Button
+                android:id="@+id/btn_minus"
+                android:layout_width="100dp"
+                android:layout_marginTop="16dp"
+                android:layout_height="100dp"
+                android:text="minus"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_add"/>
+
+        <Button
+                android:id="@+id/btn_multiply"
+                android:layout_width="100dp"
+                android:layout_marginTop="16dp"
+                android:layout_height="100dp"
+                android:text="multiply"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_minus"/>
+
+        <Button
+                android:id="@+id/btn_divide"
+                android:layout_width="100dp"
+                android:layout_marginTop="16dp"
+                android:layout_height="100dp"
+                android:text="divide"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_multiply"/>
+
+        <Button
+                android:id="@+id/btn_derivative"
+                android:layout_width="100dp"
+                android:layout_marginTop="16dp"
+                android:layout_height="100dp"
+                android:text="derivate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_divide"/>
+
+        <Button
+                android:id="@+id/btn_value"
+                android:layout_width="100dp"
+                android:layout_marginTop="16dp"
+                android:layout_height="100dp"
+                android:text="value"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_derivative"/>
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>
