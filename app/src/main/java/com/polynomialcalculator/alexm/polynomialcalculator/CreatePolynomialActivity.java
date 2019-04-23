@@ -6,16 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class CreatePolynomialActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private Button addCoefficients;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,18 +31,6 @@ public class CreatePolynomialActivity extends AppCompatActivity {
         integers.add(new Pair<>(1, 2));
         integers.add(new Pair<>(1, 2));
 
-        recyclerView.setAdapter(new CreatePolynomialAdapter(integers));
-
-        addCoefficients = findViewById(R.id.add_coefficients);
-        addCoefficients.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(((CreatePolynomialAdapter) Objects.requireNonNull(recyclerView.getAdapter())).isLastEmpty()) {
-                    Toast.makeText(CreatePolynomialActivity.this, "you must complete last coefficients", Toast.LENGTH_SHORT).show();
-                } else {
-
-                }
-            }
-        });
+        recyclerView.setAdapter(new CreatePolynomialAdapter(this, integers));
     }
 }

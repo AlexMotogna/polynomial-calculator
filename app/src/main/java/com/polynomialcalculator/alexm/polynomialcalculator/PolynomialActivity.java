@@ -24,7 +24,18 @@ public class PolynomialActivity extends AppCompatActivity {
     }
 
     private void setup() {
+
+        if (Hawk.contains("polynomialList")) {
+            list = Hawk.get("polynomialList");
+        } else {
+            list = new ArrayList<>();
+        }
+
         Intent intent = getIntent();
-        polynomial = (Polynomial) intent.getSerializableExtra("polynomialInstance");
+        position = intent.getIntExtra("pos", -1);
+
+        if(position != -1) polynomial = list.get(position);
+
+
     }
 }

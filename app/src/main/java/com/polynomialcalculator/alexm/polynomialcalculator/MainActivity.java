@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
 //                Toast.makeText(MainActivity.this, list.get(0).valueIn(position, 1).toString(), Toast.LENGTH_LONG).show();
                 Intent myIntent = new Intent(MainActivity.this, PolynomialActivity.class);
-                myIntent.putExtra("polynomialInstance", polynomial);
+                myIntent.putExtra("pos", position);
                 MainActivity.this.startActivity(myIntent);
             }
         });
