@@ -25,8 +25,8 @@ public class PolynomialActivity extends AppCompatActivity {
 
     private void setup() {
 
-        if (Hawk.contains("polynomialList")) {
-            list = Hawk.get("polynomialList");
+        if (Hawk.contains(Constants.POLYNOMIAL_LIST)) {
+            list = Hawk.get(Constants.POLYNOMIAL_LIST);
         } else {
             list = new ArrayList<>();
         }

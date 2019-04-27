@@ -6,30 +6,30 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Polynomial implements Serializable {
-    private ArrayList<Integer> numarator;
-    private ArrayList<Integer> numitor;
+    private Integer[] numarator;
+    private Integer[] numitor;
     private Integer grad;
 
-    public Polynomial(ArrayList<Integer> numarator, ArrayList<Integer> numitor, Integer grad) {
+    public Polynomial(Integer[] numarator, Integer[] numitor, Integer grad) {
         this.numitor = numitor;
         this.numarator = numarator;
         this.grad = grad;
         simplify();
     }
 
-    public ArrayList<Integer> getNumarator() {
+    public Integer[] getNumarator() {
         return numarator;
     }
 
-    public void setNumarator(ArrayList<Integer> numarator) {
+    public void setNumarator(Integer[] numarator) {
         this.numarator = numarator;
     }
 
-    public ArrayList<Integer> getNumitor() {
+    public Integer[] getNumitor() {
         return numitor;
     }
 
-    public void setNumitor(ArrayList<Integer> numitor) {
+    public void setNumitor(Integer[] numitor) {
         this.numitor = numitor;
     }
 
@@ -53,8 +53,8 @@ public class Polynomial implements Serializable {
     public Double valueIn(int x, int y) {
         Double s = 0.0;
         for (int i = 0; i <= grad; i++) {
-            if (numarator.get(i) != 0) {
-                s += ((double) numarator.get(i) * (double) toPower(x, i)) / ((double) numitor.get(i) * (double) toPower(y, i));
+            if (numarator[i] != 0) {
+                s += ((double) numarator[i] * (double) toPower(x, i)) / ((double) numitor[i] * (double) toPower(y, i));
             }
         }
 
@@ -67,16 +67,16 @@ public class Polynomial implements Serializable {
         StringBuilder g = new StringBuilder();
         for (int i = grad; i >= 0; i--) {
 
-            if (numarator.get(i) != 0) {
+            if (numarator[i] != 0) {
 
-                if (numarator.get(i) > 0 && i != grad) {
+                if (numarator[i] > 0 && i != grad) {
                     g.append(" + ");
                 }
 
-                if (numitor.get(i) != 1) {
-                    g.append(numarator.get(i)).append("/").append(numitor.get(i)).append(" X^").append(i);
+                if (numitor[i] != 1) {
+                    g.append(numarator[i]).append("/").append(numitor[i]).append(" X^").append(i);
                 } else {
-                    g.append(numarator.get(i)).append(" X^").append(i);
+                    g.append(numarator[i]).append(" X^").append(i);
                 }
 
             }
@@ -86,7 +86,7 @@ public class Polynomial implements Serializable {
 
     public void simplify() {
         for (int i = 0; i <= grad; i++) {
-            int x = numarator.get(i), y = numitor.get(i), n;
+            int x = numarator[i], y = numitor[i], n;
 
             if (x >= y) n = x;
             else n = y;
@@ -98,8 +98,8 @@ public class Polynomial implements Serializable {
                 }
             }
 
-            numarator.set(i, x);
-            numitor.set(i, y);
+            numarator[i] = x;
+            numitor[i] =  y;
         }
     }
 }

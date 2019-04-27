@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<Polynomial> list;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,20 +28,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setup() {
-
-
-        if (Hawk.contains("polynomialList")) {
-            list = Hawk.get("polynomialList");
-        } else {
-            list = new ArrayList<>();
-        }
-
+        setupRecyclerView();
 
         FloatingActionButton floatingActionButton = findViewById(R.id.act_main_fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, list.get(0).valueIn(-1, 3).toString(), Toast.LENGTH_LONG).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -51,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        RecyclerView recyclerView = findViewById(R.id.polynomial_recycler_view);
+        recyclerView = findViewById(R.id.polynomial_recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -61,14 +54,26 @@ public class MainActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new PolynomialAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(int position, Polynomial polynomial) {
-
-//                Toast.makeText(MainActivity.this, list.get(0).valueIn(position, 1).toString(), Toast.LENGTH_LONG).show();
-                Intent myIntent = new Intent(MainActivity.this, PolynomialActivity.class);
-                myIntent.putExtra("pos", position);
-                MainActivity.this.startActivity(myIntent);
+                //Intent myIntent = new Intent(MainActivity.this, PolynomialActivity.class);
+                //myIntent.putExtra("pos", position);
+                //MainActivity.this.startActivity(myIntent);
             }
         });
 
         recyclerView.setAdapter(mAdapter);
+    }
+
+    private void setupRecyclerView() {
+        if (Hawk.contains(Constants.POLYNOMIAL_LIST)) {
+            list = Hawk.get(Constants.POLYNOMIAL_LIST);
+        } else {
+            list = new ArrayList<>();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setup();
     }
 }

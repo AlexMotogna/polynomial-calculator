@@ -19,8 +19,10 @@ import com.polynomialcalculator.alexm.polynomialcalculator.models.Polynomial;
 import java.util.ArrayList;
 
 public class CreatePolynomialAdapter extends RecyclerView.Adapter<CreatePolynomialAdapter.MyViewHolder> {
-    private ArrayList<Pair<Integer, Integer>> integers;
-
+    Integer[] numarator = new Integer[1000];
+    Integer[] numitor = new Integer[1000];
+    ArrayList<Integer> puteri = new ArrayList<>();
+    Integer grad = 0;
     Polynomial polynomial;
 
     // ingegers.get(index).first = numarator; ingegers.get(index).second = numitor;
@@ -35,37 +37,62 @@ public class CreatePolynomialAdapter extends RecyclerView.Adapter<CreatePolynomi
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder vh, int position) {
-        final Pair<Integer, Integer> coef = integers.get(position);
+    public void onBindViewHolder(@NonNull final MyViewHolder vh, final int position) {
+        if(position == 0) {
 
-        vh.numarator.setText(coef.first.toString());
-        vh.numitor.setText(coef.second.toString());
-        vh.putere.setText(coef.second.toString());
-
-        if (position == integers.size() - 1) {
-            vh.input_numarator.setVisibility(View.VISIBLE);
-            vh.input_numitor.setVisibility(View.VISIBLE);
-            vh.input_putere.setVisibility(View.VISIBLE);
-            vh.addCoefficients.setVisibility(View.VISIBLE);
         } else {
-            vh.input_numarator.setVisibility(View.GONE);
-            vh.input_numitor.setVisibility(View.GONE);
-            vh.input_putere.setVisibility(View.GONE);
-            vh.addCoefficients.setVisibility(View.GONE);
+            Integer putere = puteri.get(position - 1);
+
+            final Pair<Integer, Integer> coef = new Pair<>(numarator[putere], numitor[putere]);
+
+            vh.numarator.setText(coef.first.toString());
+            vh.numitor.setText(coef.second.toString());
+            vh.putere.setText(putere.toString());
+
+            try {
+                Integer aux = puteri.get(position);
+
+            } catch (Exception e) {
+                vh.input_numarator.setVisibility(View.VISIBLE);
+                vh.input_numitor.setVisibility(View.VISIBLE);
+                vh.input_putere.setVisibility(View.VISIBLE);
+                vh.addCoefficients.setVisibility(View.VISIBLE);
+            }
+
         }
 
         vh.addCoefficients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String putere = vh.input_putere.getText().toString();
-                String numitor = vh.input_numitor.getText().toString();
-                String numarator = vh.input_numarator.getText().toString();
+                String auxPutere = vh.input_putere.getText().toString();
+                String auxNumarator = vh.input_numarator.getText().toString();
+                String auxNumitor = vh.input_numitor.getText().toString();
 
-                if(putere.isEmpty() && numitor.isEmpty() && numarator.isEmpty() || numitor.equals("0")) {
+                if(auxPutere.isEmpty() || auxNumitor.isEmpty() || auxNumarator.isEmpty() || auxNumitor.equals("0")) {
                     Toast.makeText(context, "Wrong data! Try again.", Toast.LENGTH_SHORT).show();
                 } else {
-                    // logic to create polynomial
-                    // add value
+
+                    vh.input_numarator.setVisibility(View.GONE);
+                    vh.input_numitor.setVisibility(View.GONE);
+                    vh.input_putere.setVisibility(View.GONE);
+                    vh.addCoefficients.setVisibility(View.GONE);
+
+
+                    Integer putere = Integer.parseInt(auxPutere);
+                    Integer numa = Integer.parseInt(auxNumarator);
+                    Integer numi = Integer.parseInt(auxNumitor);
+
+                    numarator[putere] = numa;
+                    numitor[putere] = numi;
+
+                    if(putere > grad){
+                        grad = putere;
+                    }
+
+                    puteri.add(putere);
+
+
+
                     notifyDataSetChanged();
                 }
             }
@@ -73,10 +100,24 @@ public class CreatePolynomialAdapter extends RecyclerView.Adapter<CreatePolynomi
     }
 
 
+    public Polynomial getFinalPolynomial(){
+
+        for (int i = grad; i >= 0; i--) {
+            if(numarator[i] == null) {
+                numarator[i] = 0;
+                numitor[i] = 1;
+            }
+        }
+
+        polynomial = new Polynomial(numarator, numitor, grad);
+
+        return polynomial;
+    }
+
 
     @Override
     public int getItemCount() {
-        return integers.size();
+        return puteri.size() + 1;
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -100,8 +141,10 @@ public class CreatePolynomialAdapter extends RecyclerView.Adapter<CreatePolynomi
         }
     }
 
-    CreatePolynomialAdapter(Context context, ArrayList<Pair<Integer, Integer>> integers) {
-        this.integers = integers;
+    CreatePolynomialAdapter(Context context, Integer[] numa, Integer[] numi, ArrayList<Integer> puteri) {
+        this.numarator = numa;
+        this.numitor = numi;
         this.context = context;
+        this.puteri = puteri;
     }
 }
