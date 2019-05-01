@@ -2,6 +2,7 @@ package com.polynomialcalculator.alexm.polynomialcalculator.models;
 
 import android.support.annotation.NonNull;
 
+import javax.xml.transform.dom.DOMLocator;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -50,15 +51,39 @@ public class Polynomial implements Serializable {
         return r;
     }
 
-    public Double valueIn(int x, int y) {
-        Double s = 0.0;
-        for (int i = 0; i <= grad; i++) {
-            if (numarator[i] != 0) {
-                s += ((double) numarator[i] * (double) toPower(x, i)) / ((double) numitor[i] * (double) toPower(y, i));
+    public Integer numitorComun() {
+        Integer x = 1;
+
+        for(int i = 0; i <= grad; i++) {
+            if(numitor[i] != 1 && numitor[i] != 0) {
+
+                Integer copieCmmmc = x, copieEL = numitor[i];
+
+                while(copieCmmmc != copieEL){
+                    if (copieCmmmc > copieEL)
+                        copieCmmmc = copieCmmmc - copieEL;
+                    else if (copieEL > copieCmmmc)
+                        copieEL = copieEL - copieCmmmc;
+                }
+
+                x = x*(numitor[i]/copieEL);
             }
         }
 
-        return s;
+        return x;
+    }
+
+    public Double valueIn(int x) {
+        Double s = 0.0;
+        Double numComun = (double) numitorComun();
+
+        for (int i = 0; i <= grad; i++) {
+            if (numarator[i] != 0) {
+                s += ((double) numarator[i] * (double) toPower(x, i)) * (numComun / (double) numitor[i]);
+            }
+        }
+
+        return s / numComun;
     }
 
     @NonNull
@@ -91,15 +116,50 @@ public class Polynomial implements Serializable {
             if (x >= y) n = x;
             else n = y;
 
-            for (int j = 2; j * j <= n; j++) {
+            for (int j = 2; j <= n; j++) {
                 while (x % j == 0 && y % j == 0) {
                     x /= j;
                     y /= j;
                 }
             }
 
-            numarator[i] = x;
-            numitor[i] =  y;
+            this.numarator[i] = x;
+            this.numitor[i] =  y;
         }
     }
+
+    public Polynomial getDerivative() {
+        Integer[] newNumarator = new Integer[1000];
+        Integer[] newNumitor = new Integer[1000];
+
+        for(int i = 1; i <= grad; i++) {
+            newNumarator[i-1] = i * numarator[i];
+            newNumitor[i-1] = numitor[i];
+        }
+
+        Polynomial derivative = new Polynomial(newNumarator, newNumitor, grad - 1);
+        return derivative;
+    }
+
+    public Polynomial getOneAntiderivative(int constant) {
+        Integer[] newNumarator = new Integer[1000];
+        Integer[] newNumitor = new Integer[1000];
+
+        newNumarator[0] = constant;
+        newNumitor[0] = 1;
+
+        for (int i = 0; i <= grad; i++) {
+            newNumarator[i+1] = numarator[i];
+            newNumitor[i+1] = numitor[i] * (i+1);
+        }
+
+        Polynomial antiderivative = new Polynomial(newNumarator, newNumitor, grad + 1);
+        return antiderivative;
+    }
+
+    public Double integrate(int a, int b) {
+        Polynomial antiderivative = getOneAntiderivative(22);
+        return antiderivative.valueIn(b) - antiderivative.valueIn(a);
+    }
+
 }

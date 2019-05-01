@@ -11,5 +11,10 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Hawk.init(this).build();
+
+        ArrayList<Polynomial> list = new ArrayList<>();
+
+        //Hawk.put(Constants.POLYNOMIAL_LIST, list);
+
     }
 }

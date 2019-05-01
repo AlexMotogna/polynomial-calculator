@@ -54,9 +54,10 @@ public class MainActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new PolynomialAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(int position, Polynomial polynomial) {
-                //Intent myIntent = new Intent(MainActivity.this, PolynomialActivity.class);
-                //myIntent.putExtra("pos", position);
-                //MainActivity.this.startActivity(myIntent);
+                Toast.makeText(MainActivity.this, list.get(position).valueIn(1).toString(), Toast.LENGTH_SHORT).show();
+//                Intent myIntent = new Intent(MainActivity.this, PolynomialActivity.class);
+//                myIntent.putExtra("pos", position);
+//                MainActivity.this.startActivity(myIntent);
             }
         });
 

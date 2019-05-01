@@ -20,8 +20,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:textSize="24sp"
-                android:textColor="@color/colorAccent"
-                tools:text="2xy teakjhsajkfhjkadsf"/>
+                android:textColor="@color/colorAccent"/>
 
         <Button
                 android:id="@+id/btn_add"
@@ -30,18 +29,8 @@
                 android:layout_height="100dp"
                 android:text="add"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_half"
                 app:layout_constraintTop_toBottomOf="@+id/polynomial_tv"/>
-
-        <Button
-                android:id="@+id/btn_minus"
-                android:layout_width="100dp"
-                android:layout_marginTop="16dp"
-                android:layout_height="100dp"
-                android:text="minus"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_add"/>
 
         <Button
                 android:id="@+id/btn_multiply"
@@ -50,8 +39,8 @@
                 android:layout_height="100dp"
                 android:text="multiply"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_minus"/>
+                app:layout_constraintEnd_toEndOf="@id/guideline_half"
+                app:layout_constraintTop_toBottomOf="@+id/btn_add"/>
 
         <Button
                 android:id="@+id/btn_divide"
@@ -60,18 +49,8 @@
                 android:layout_height="100dp"
                 android:text="divide"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_half"
                 app:layout_constraintTop_toBottomOf="@+id/btn_multiply"/>
-
-        <Button
-                android:id="@+id/btn_derivative"
-                android:layout_width="100dp"
-                android:layout_marginTop="16dp"
-                android:layout_height="100dp"
-                android:text="derivate"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_divide"/>
 
         <Button
                 android:id="@+id/btn_value"
@@ -80,8 +59,55 @@
                 android:layout_height="100dp"
                 android:text="value"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_half"
+                app:layout_constraintTop_toBottomOf="@+id/btn_divide"/>
+
+        <Button
+                android:id="@+id/btn_whole_solutions"
+                android:layout_width="100dp"
+                android:layout_marginTop="16dp"
+                android:layout_height="100dp"
+                android:text="Get Whole Solutions"
+                app:layout_constraintStart_toStartOf="@id/guideline_half"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_derivative"/>
+                app:layout_constraintTop_toBottomOf="@id/polynomial_tv"/>
+
+        <Button
+                android:id="@+id/btn_derivative"
+                android:layout_width="100dp"
+                android:layout_marginTop="16dp"
+                android:layout_height="100dp"
+                android:text="derivate"
+                app:layout_constraintStart_toStartOf="@id/guideline_half"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_whole_solutions"/>
+
+        <Button
+                android:id="@+id/btn_antiderivative"
+                android:layout_width="100dp"
+                android:layout_marginTop="16dp"
+                android:layout_height="100dp"
+                android:text="anti-derivate"
+                app:layout_constraintStart_toStartOf="@id/guideline_half"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_derivative"/>
+
+        <Button
+                android:id="@+id/btn_integrate"
+                android:layout_width="100dp"
+                android:layout_marginTop="16dp"
+                android:layout_height="100dp"
+                android:text="integrate"
+                app:layout_constraintStart_toStartOf="@id/guideline_half"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_antiderivative"/>
+
+        <android.support.constraint.Guideline
+                android:id="@+id/guideline_half"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5"/>
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

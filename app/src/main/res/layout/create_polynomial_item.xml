@@ -47,12 +47,12 @@
             android:id="@+id/input_numarator"
             android:hint="numarator"
             android:layout_width="0dp"
+            android:inputType="numberSigned"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@+id/guideline_one"
             android:layout_marginTop="10dp"
             app:layout_constraintTop_toBottomOf="@+id/numarator"
-            app:layout_constraintEnd_toEndOf="@+id/guideline_two"
-            android:inputType="number"/>
+            app:layout_constraintEnd_toEndOf="@+id/guideline_two"/>
 
     <EditText
             android:id="@+id/input_numitor"

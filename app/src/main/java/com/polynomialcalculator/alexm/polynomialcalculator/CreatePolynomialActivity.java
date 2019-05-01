@@ -42,6 +42,7 @@ public class CreatePolynomialActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Polynomial pol = ((CreatePolynomialAdapter) recyclerView.getAdapter()).getFinalPolynomial();
+                pol.simplify();
                 ArrayList<Polynomial> list = Hawk.get(Constants.POLYNOMIAL_LIST);
                 list.add(pol);
                 Hawk.put(Constants.POLYNOMIAL_LIST,list);
