@@ -16,6 +16,7 @@ public class Polynomial implements Serializable {
         this.numarator = numarator;
         this.grad = grad;
         simplify();
+        fixGrad();
     }
 
     public Integer[] getNumarator() {
@@ -42,6 +43,15 @@ public class Polynomial implements Serializable {
         this.grad = grad;
     }
 
+    public void fixGrad(){
+        for(int i = grad; i >= 0; i--){
+            if(numarator[i] != 0){
+                this.grad = i;
+                return;
+            }
+        }
+        this.grad = 0;
+    }
 
     public int toPower(int x, int y) {
         int r = 1;
@@ -95,7 +105,7 @@ public class Polynomial implements Serializable {
             if (numarator[i] != 0) {
 
                 if (numarator[i] > 0 && i != grad) {
-                    g.append(" + ");
+                    g.append("+ ");
                 }
 
                 if (numitor[i] != 1) {
@@ -103,6 +113,7 @@ public class Polynomial implements Serializable {
                 } else {
                     g.append(numarator[i]).append(" X^").append(i);
                 }
+                g.append(" ");
 
             }
         }
@@ -112,6 +123,16 @@ public class Polynomial implements Serializable {
     public void simplify() {
         for (int i = 0; i <= grad; i++) {
             int x = numarator[i], y = numitor[i], n;
+
+            if(x < 0 && y < 0){
+                x *= -1;
+                y *= -1;
+            }
+
+            if(x > 0 && y < 0){
+                x *= -1;
+                y *= -1;
+            }
 
             if (x >= y) n = x;
             else n = y;
@@ -132,13 +153,21 @@ public class Polynomial implements Serializable {
         Integer[] newNumarator = new Integer[1000];
         Integer[] newNumitor = new Integer[1000];
 
-        for(int i = 1; i <= grad; i++) {
-            newNumarator[i-1] = i * numarator[i];
-            newNumitor[i-1] = numitor[i];
-        }
+        if(grad == 0) {
 
-        Polynomial derivative = new Polynomial(newNumarator, newNumitor, grad - 1);
-        return derivative;
+            newNumarator[0] = 0;
+            newNumitor[0] = 1;
+            return new Polynomial(newNumarator, newNumitor, 0);
+
+        } else {
+
+            for(int i = 1; i <= grad; i++) {
+                newNumarator[i-1] = i * numarator[i];
+                newNumitor[i-1] = numitor[i];
+            }
+            return new Polynomial(newNumarator, newNumitor, grad - 1);
+
+        }
     }
 
     public Polynomial getOneAntiderivative(int constant) {
@@ -153,13 +182,39 @@ public class Polynomial implements Serializable {
             newNumitor[i+1] = numitor[i] * (i+1);
         }
 
-        Polynomial antiderivative = new Polynomial(newNumarator, newNumitor, grad + 1);
-        return antiderivative;
+        return new Polynomial(newNumarator, newNumitor, grad + 1);
     }
 
     public Double integrate(int a, int b) {
         Polynomial antiderivative = getOneAntiderivative(22);
         return antiderivative.valueIn(b) - antiderivative.valueIn(a);
+    }
+
+    public ArrayList<Integer> getWholeSolutions(){
+        ArrayList<Integer> solutions = new ArrayList<>();
+        Integer t;
+
+        if(numarator[0] == 0) {
+            solutions.add(0);
+
+            int k = 1;
+            while(numarator[k] == 0) k++;
+            t = numarator[k];
+
+        } else {
+            t = numarator[0];
+        }
+
+        if(t < 0) t *= -1;
+
+        for(int i = 1; i <= t; i++) {
+            if(t % i == 0){
+                if(valueIn(i) == 0) solutions.add(i);
+                if(valueIn(-i) == 0) solutions.add(-i);
+            }
+        }
+
+        return solutions;
     }
 
 }

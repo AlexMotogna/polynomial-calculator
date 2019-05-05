@@ -68,7 +68,7 @@ public class CreatePolynomialAdapter extends RecyclerView.Adapter<CreatePolynomi
                 String auxNumarator = vh.input_numarator.getText().toString();
                 String auxNumitor = vh.input_numitor.getText().toString();
 
-                if(auxPutere.isEmpty() || auxNumitor.isEmpty() || auxNumarator.isEmpty() || auxNumitor.equals("0")) {
+                if(auxPutere.isEmpty() || auxNumitor.isEmpty() || auxNumarator.isEmpty() || auxNumitor.equals("0")  || Integer.parseInt(auxPutere) > 999 || checkIfExists(Integer.parseInt(auxPutere))) {
                     Toast.makeText(context, "Wrong data! Try again.", Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -91,12 +91,18 @@ public class CreatePolynomialAdapter extends RecyclerView.Adapter<CreatePolynomi
 
                     puteri.add(putere);
 
-
-
                     notifyDataSetChanged();
                 }
             }
         });
+    }
+
+    private boolean checkIfExists(int x){
+        for(int i = 0; i < puteri.size(); i++){
+            if(puteri.get(i) == x) return true;
+        }
+
+        return false;
     }
 
 
