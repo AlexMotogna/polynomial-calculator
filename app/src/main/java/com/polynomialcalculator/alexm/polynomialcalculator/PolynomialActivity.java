@@ -68,6 +68,7 @@ public class PolynomialActivity extends AppCompatActivity {
                 View root = inflater.inflate(R.layout.select_polynomial_dialog, null);
                 builder.setView(root);
 
+                builder.setTitle("Add polynomial with:");
 
                 final TextView result = root.findViewById(R.id.spd_tv_result);
 
@@ -114,6 +115,7 @@ public class PolynomialActivity extends AppCompatActivity {
                 View root = inflater.inflate(R.layout.select_polynomial_dialog, null);
                 builder.setView(root);
 
+                builder.setTitle("Multiply polynomial with:");
 
                 final TextView result = root.findViewById(R.id.spd_tv_result);
 
@@ -128,7 +130,7 @@ public class PolynomialActivity extends AppCompatActivity {
                     @Override
                     public void onItemClicked(int position, Polynomial pol) {
 
-                        if(pol.getGrad() + polynomial.getGrad() > 999) {
+                        if (pol.getGrad() + polynomial.getGrad() > 999) {
                             result.setText("Result too big!");
                         } else {
                             result.setText("Result: " + multiplication(polynomial, pol).toString());
@@ -165,6 +167,7 @@ public class PolynomialActivity extends AppCompatActivity {
                 View root = inflater.inflate(R.layout.select_polynomial_dialog, null);
                 builder.setView(root);
 
+                builder.setTitle("Divide polynomial with:");
 
                 final TextView result = root.findViewById(R.id.spd_tv_result);
 
@@ -180,6 +183,7 @@ public class PolynomialActivity extends AppCompatActivity {
                     public void onItemClicked(int position, Polynomial pol) {
 
                         final Pair<Polynomial, Polynomial> pair;
+
                         pair = division(polynomial, pol);
 
                         result.setText("Quotient: " + pair.first.toString() + '\n' + "Remainder: " + pair.second.toString());
@@ -213,6 +217,8 @@ public class PolynomialActivity extends AppCompatActivity {
                 View root = inflater.inflate(R.layout.value_dialog, null);
                 builder.setView(root);
 
+                builder.setTitle("Get the value of the polynomial in:");
+
                 final TextView result = root.findViewById(R.id.value_tv);
                 final EditText editValue = root.findViewById(R.id.insert_value);
                 Button getValue = root.findViewById(R.id.done_button);
@@ -244,8 +250,7 @@ public class PolynomialActivity extends AppCompatActivity {
 
         });
 
-        solutionButton.setOnClickListener(new View.OnClickListener()
-        {
+        solutionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -254,17 +259,23 @@ public class PolynomialActivity extends AppCompatActivity {
                 View root = inflater.inflate(R.layout.tv_dialog, null);
                 builder.setView(root);
 
+                builder.setTitle("The polynomial's whole solutions are:");
+
                 final TextView result = root.findViewById(R.id.tv);
 
                 ArrayList<Integer> solutions = polynomial.getWholeSolutions();
                 StringBuilder g = new StringBuilder();
                 for (int i = 0; i < solutions.size(); i++) {
                     g.append(solutions.get(i));
-                    if(i < solutions.size() -1) g.append(", ");
+                    if (i < solutions.size() - 1) g.append(", ");
                     else g.append(".");
                 }
 
-                result.setText(g.toString());
+                if (solutions.isEmpty()) {
+                    result.setText("There aren't whole solutions for this polynomial");
+                } else {
+                    result.setText(g.toString());
+                }
 
 
                 final AlertDialog dialog = builder.create();
@@ -283,8 +294,7 @@ public class PolynomialActivity extends AppCompatActivity {
             }
         });
 
-        derivativeButton.setOnClickListener(new View.OnClickListener()
-        {
+        derivativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -313,8 +323,7 @@ public class PolynomialActivity extends AppCompatActivity {
             }
         });
 
-        antiderivativeButton.setOnClickListener(new View.OnClickListener()
-        {
+        antiderivativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -325,7 +334,7 @@ public class PolynomialActivity extends AppCompatActivity {
 
                 final TextView result = root.findViewById(R.id.tv);
 
-                if(polynomial.getGrad() == 999){
+                if (polynomial.getGrad() == 999) {
                     result.setText("Result too big!");
                 } else {
                     result.setText(polynomial.getOneAntiderivative(0).toString());
@@ -358,6 +367,8 @@ public class PolynomialActivity extends AppCompatActivity {
                 LayoutInflater inflater = LayoutInflater.from(PolynomialActivity.this);
                 View root = inflater.inflate(R.layout.integrate_dialog, null);
                 builder.setView(root);
+
+                builder.setTitle("Integrate");
 
                 final TextView result = root.findViewById(R.id.value_tv);
                 final EditText editFromValue = root.findViewById(R.id.from_button);
@@ -399,22 +410,25 @@ public class PolynomialActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View v) {
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(PolynomialActivity.this);
-                LayoutInflater inflater = LayoutInflater.from(PolynomialActivity.this);
-                View root = inflater.inflate(R.layout.delete_dialog, null);
-                builder.setView(root);
-
-                Button yesButton = root.findViewById(R.id.yes_button);
-                Button noButton = root.findViewById(R.id.no_button);
 
                 final AlertDialog dialog = builder.create();
-                dialog.setCancelable(true);
-                dialog.setCanceledOnTouchOutside(true);
 
-                yesButton.setOnClickListener(new View.OnClickListener() {
+                dialog.setTitle("Delete polynomial");
+                dialog.setMessage("Are you sure?");
+
+                dialog.setButton(-2, "No", new DialogInterface.OnClickListener() {
+
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.setButton(-1, "Yes", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
                         list.remove(position);
                         Hawk.put(Constants.POLYNOMIAL_LIST, list);
                         dialog.dismiss();
@@ -422,18 +436,15 @@ public class PolynomialActivity extends AppCompatActivity {
                     }
                 });
 
-                noButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
+                dialog.setCancelable(true);
+                dialog.setCanceledOnTouchOutside(true);
 
                 dialog.show();
 
             }
         });
     }
+
 
     private Polynomial addition(Polynomial pol1, Polynomial pol2) {
 
