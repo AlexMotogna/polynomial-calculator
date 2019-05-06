@@ -24,9 +24,7 @@ public class CreatePolynomialAdapter extends RecyclerView.Adapter<CreatePolynomi
     ArrayList<Integer> puteri = new ArrayList<>();
     Integer grad = 0;
     Polynomial polynomial;
-
-    // ingegers.get(index).first = numarator; ingegers.get(index).second = numitor;
-
+    
     private Context context;
 
     @NonNull

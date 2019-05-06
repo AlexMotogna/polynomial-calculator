@@ -12,12 +12,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spd_rv_polynomials"
             android:layout_marginTop="10dp"
             android:textSize="16sp"
             tools:text="Result: x^3"/>
 
     <android.support.v7.widget.RecyclerView
+            app:layout_constraintTop_toBottomOf="@+id/spd_tv_result"
             android:id="@+id/spd_rv_polynomials"
             tools:listitem="@layout/item_polynomial"
             android:scrollbars="vertical"

@@ -227,7 +227,11 @@ public class PolynomialActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        result.setText(polynomial.valueIn(Integer.parseInt(editValue.getText().toString())).toString());
+                        if(editValue.getText().toString().isEmpty()){
+                            Toast.makeText(PolynomialActivity.this, "Please insert a value", Toast.LENGTH_SHORT).show();
+                        } else {
+                            result.setText(polynomial.valueIn(Integer.parseInt(editValue.getText().toString())).toString());
+                        }
 
                     }
                 });
@@ -381,10 +385,15 @@ public class PolynomialActivity extends AppCompatActivity {
 
                         Integer to, from;
 
-                        to = Integer.parseInt(editToValue.getText().toString());
-                        from = Integer.parseInt(editFromValue.getText().toString());
+                        if(editFromValue.getText().toString().isEmpty() || editToValue.getText().toString().isEmpty()){
+                            Toast.makeText(PolynomialActivity.this, "Please insert values", Toast.LENGTH_SHORT).show();
+                        } else {
 
-                        result.setText(polynomial.integrate(from, to).toString());
+                            to = Integer.parseInt(editToValue.getText().toString());
+                            from = Integer.parseInt(editFromValue.getText().toString());
+
+                            result.setText(polynomial.integrate(from, to).toString());
+                        }
 
                     }
                 });
