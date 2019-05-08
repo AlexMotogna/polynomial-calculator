@@ -24,7 +24,7 @@ public class CreatePolynomialAdapter extends RecyclerView.Adapter<CreatePolynomi
     ArrayList<Integer> puteri = new ArrayList<>();
     Integer grad = 0;
     Polynomial polynomial;
-    
+
     private Context context;
 
     @NonNull
@@ -37,6 +37,21 @@ public class CreatePolynomialAdapter extends RecyclerView.Adapter<CreatePolynomi
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder vh, final int position) {
         if(position == 0) {
+
+            vh.input_numarator.setVisibility(View.VISIBLE);
+            vh.input_numitor.setVisibility(View.VISIBLE);
+            vh.input_putere.setVisibility(View.VISIBLE);
+            vh.addCoefficients.setVisibility(View.VISIBLE);
+
+            try{
+                Integer aux = puteri.get(position);
+                vh.input_numarator.setVisibility(View.GONE);
+                vh.input_numitor.setVisibility(View.GONE);
+                vh.input_putere.setVisibility(View.GONE);
+                vh.addCoefficients.setVisibility(View.GONE);
+            } catch (Exception e) {
+
+            }
 
         } else {
             Integer putere = puteri.get(position - 1);
@@ -90,6 +105,8 @@ public class CreatePolynomialAdapter extends RecyclerView.Adapter<CreatePolynomi
                     puteri.add(putere);
 
                     notifyDataSetChanged();
+
+                    ((CreatePolynomialActivity)context).updateTv();
                 }
             }
         });
