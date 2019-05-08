@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import com.orhanobut.hawk.Hawk;
 import com.polynomialcalculator.alexm.polynomialcalculator.models.Polynomial;
 
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 
 public class CreatePolynomialActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
+    TextView polynomialTv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class CreatePolynomialActivity extends AppCompatActivity {
     private void setupViews() {
         recyclerView = findViewById(R.id.create_polynomial_rv);
         Button saveButton = findViewById(R.id.save_pol);
+        polynomialTv = findViewById(R.id.tv_display);
 
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -49,5 +52,10 @@ public class CreatePolynomialActivity extends AppCompatActivity {
                 CreatePolynomialActivity.this.finish();
             }
         });
+    }
+
+    public void updateTv(){
+        Polynomial polToDisplay = ((CreatePolynomialAdapter) recyclerView.getAdapter()).getFinalPolynomial();
+        polynomialTv.setText(polToDisplay.toString());
     }
 }
